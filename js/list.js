@@ -6,6 +6,9 @@ const todoButton = todoInput.next();
 const todoBoard = $("#todo-board");
 todoButton.on("click", addTodo);
 
+const countText = $("#count");
+let count = 0;
+
 function addTodo(){
     const text = todoInput.val();
     const li = $("<li>");
@@ -23,28 +26,20 @@ function addTodo(){
     button.on("click",todoDelete);
 }
 
-function todoCheck(e) {
-    const li = e.target.parentNode;
-    if(e.target.checked)
-        li.style.color = "lightgray"
-    else 
-        li.style.color = "black"
+function todoCheck(){
+    if($(this).prop("checked")){
+    $(this).parent().attr("style","color:lightgray;");
+    } else {
+        $(this).parent().attr("style","color:black;");
+    }
+
+    count = $("#todo-board li input:checked").length;
+    countText.html(count);
 }
 
-function todoDelete(e) {
-    const li = e.target.parentNode;
-    li.remove();
+function todoDelete(){
+    $(this).parent().remove();
+
+    count = $("#todo-board li input:checked").length;
+    countText.html(count);
 }
-
-    const check = document.querySelector("#checkbox");
-    check.addEventListener("click", checkTodayList);
-
-    function checkTodayList(){
-        const checkedlist = 'input[name="todayCheck"]:checked';
-        const seletChecklist = document.querySelectorAll(checkedlist);
-        const seletChecklistCount = seletChecklist.length;
-    
-        const pTag = document.querySelector("#ptag");
-        pTag.innerHTML = `오늘 완료한 할 일 : ${seletChecklistCount} 개`
-}
-
